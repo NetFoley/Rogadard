@@ -24,7 +24,7 @@ ARogadardCharacter::ARogadardCharacter()
 
 	// Configure character movement
 	GetCharacterMovement()->bUseControllerDesiredRotation = true; // Rotate character to moving direction
-	GetCharacterMovement()->RotationRate = FRotator(0.f, 640.f, 0.f);
+	GetCharacterMovement()->RotationRate = FRotator(0.f, 999.f, 0.f);
 
 	// Create a camera boom...
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
