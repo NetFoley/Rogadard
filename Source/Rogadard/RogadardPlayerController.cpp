@@ -5,6 +5,7 @@
 #include "Runtime/Engine/Classes/Components/DecalComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "RogadardCharacter.h"
+#include "Math.h"
 #include "Engine/World.h"
 
 ARogadardPlayerController::ARogadardPlayerController()
@@ -19,7 +20,7 @@ void ARogadardPlayerController::PlayerTick(float DeltaTime)
 
 	if (ARogadardCharacter* MyPawn = Cast<ARogadardCharacter>(GetPawn()))
 	{
-		MyPawn->FaceRotation(MyPawn->GetCursorToWorld()->GetRelativeRotation(), 0.5f);
+		this->ControlRotation =	((MyPawn->GetCursorToWorld()->GetTransformIncludingDecalSize().GetLocation()-MyPawn->GetTransform().GetLocation()).Rotation());
 	}
 }
 
