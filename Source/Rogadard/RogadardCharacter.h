@@ -24,6 +24,15 @@ public:
 	/** Returns CursorToWorld subobject **/
 	FORCEINLINE class UDecalComponent* GetCursorToWorld() { return CursorToWorld; }
 
+	//Check if character is stunned
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+		bool isNotStunned();
+
+	UPROPERTY(BlueprintReadWrite)
+		bool attacking;
+	UPROPERTY(BlueprintReadWrite)
+		bool hurted;
+		
 private:
 	/** Top down camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -36,5 +45,7 @@ private:
 	/** A decal that projects to the cursor location. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UDecalComponent* CursorToWorld;
+
+
 };
 
