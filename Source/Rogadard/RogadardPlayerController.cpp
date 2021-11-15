@@ -43,32 +43,19 @@ void ARogadardPlayerController::OnResetVR()
 
 void ARogadardPlayerController::MoveForward(float Value)
 {
-	if (Value != 0.0f)
+	ARogadardCharacter* MyPawn = Cast<ARogadardCharacter>(GetPawn());
+	if (Value != 0.0f && MyPawn->isNotStunned())
 	{
-		APawn* const MyPawn = GetPawn();
 		// add movement in that direction
 		MyPawn->AddMovementInput(FVector(1.0f, 0.0f, 0.0f), Value, false);
 	}
 }
 void ARogadardPlayerController::MoveRight(float Value)
 {
-	if (Value != 0.0f)
+	ARogadardCharacter* MyPawn = Cast<ARogadardCharacter>(GetPawn());
+	if (Value != 0.0f && MyPawn->isNotStunned())
 	{
-		APawn* const MyPawn = GetPawn();
 		// add movement in that direction
 		MyPawn->AddMovementInput(FVector(0.0f, 1.0f, 0.0f), Value, false);
-	}
-}
-
-// Common destination setting and movement implementation.
-void ARogadardPlayerController::SetNewMoveDestination(const FVector DestLocation)
-{
-	if (APawn* const MyPawn = GetPawn())
-	{
-		float const Distance = FVector::Dist(DestLocation, MyPawn->GetActorLocation());
-
-		// We need to issue move command only if far enough in order for walk animation to play correctly.
-		if (Distance > 120.0f)
-			UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, DestLocation);
 	}
 }

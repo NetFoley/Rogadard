@@ -32,8 +32,7 @@ protected:
 	/** Handles stafing movement, left and right */
 	void MoveRight(float Val);
 
-	/** Navigate player to the given world location. */
-	void SetNewMoveDestination(const FVector DestLocation);
+
 
 };
 

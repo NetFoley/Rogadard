@@ -86,3 +86,8 @@ void ARogadardCharacter::Tick(float DeltaSeconds)
 		}
 	}
 }
+
+bool ARogadardCharacter::isNotStunned()
+{
+	return !(this->attacking || this->hurted);
+}
