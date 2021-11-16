@@ -53,6 +53,14 @@ ARogadardCharacter::ARogadardCharacter()
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
+	bReplicates = true;
+}
+
+void ARogadardCharacter::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(ARogadardCharacter, attacking);
+	DOREPLIFETIME(ARogadardCharacter, hurted);
 }
 
 void ARogadardCharacter::Tick(float DeltaSeconds)
@@ -87,7 +95,47 @@ void ARogadardCharacter::Tick(float DeltaSeconds)
 	}
 }
 
+void ARogadardCharacter::attack_Implementation()
+{
+	if (this->isNotStunned())
+	{
+		this->setAttack(true);
+	}
+}
+
+void ARogadardCharacter::setAttack(bool state)
+{
+	this->attacking = state;
+}
+
+void ARogadardCharacter::setHurt(bool state)
+{
+	this->hurted = state;
+}
+
+void ARogadardCharacter::stopAttack()
+{
+	this->attacking = false;
+}
+
+bool ARogadardCharacter::getAttack()
+{
+	return this->attacking;
+}
+
+bool ARogadardCharacter::getHurt()
+{
+	return this->hurted;
+}
+
 bool ARogadardCharacter::isNotStunned()
 {
 	return !(this->attacking || this->hurted);
 }
+
+/*
+//Client-specific functionality
+if (IsLocallyControlled())
+
+//Server-specific functionality
+if (GetLocalRole() == ROLE_Authority)*/

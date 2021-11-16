@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Net/UnrealNetwork.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "RogadardCharacter.generated.h"
@@ -28,10 +29,25 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 		bool isNotStunned();
 
-	UPROPERTY(BlueprintReadWrite)
-		bool attacking;
-	UPROPERTY(BlueprintReadWrite)
-		bool hurted;
+	UFUNCTION(BlueprintCallable, Reliable, Server)
+		void attack();
+	UFUNCTION(BlueprintCallable)
+		void stopAttack();
+
+	UFUNCTION(BlueprintCallable)
+		void setAttack(bool state);
+	UFUNCTION(BlueprintCallable)
+		void setHurt(bool state);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+		bool getAttack();
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+		bool getHurt();
+
+	UPROPERTY(Replicated)
+		bool attacking = false;
+	UPROPERTY(Replicated)
+		bool hurted = false;
 		
 private:
 	/** Top down camera */
