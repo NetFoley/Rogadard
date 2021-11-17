@@ -100,7 +100,31 @@ void ARogadardCharacter::attack_Implementation()
 	if (this->isNotStunned())
 	{
 		this->setAttack(true);
+		this->GetCharacterMovement()->DisableMovement();
 	}
+}
+
+void ARogadardCharacter::stopAttack()
+{
+	this->setAttack(false);
+	this->GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+}
+
+void ARogadardCharacter::hurt_Implementation(float dmg)
+{
+	this->setLife(this->getLife() - dmg);
+	if (this->life > 0.0f)
+	{
+		this->stopAttack();
+		this->setHurt(true);
+		this->GetCharacterMovement()->DisableMovement();
+	}
+}
+
+void ARogadardCharacter::stopHurt()
+{
+	this->setHurt(false);
+	this->GetCharacterMovement()->SetMovementMode(MOVE_Walking);
 }
 
 void ARogadardCharacter::setAttack(bool state)
@@ -113,14 +137,18 @@ void ARogadardCharacter::setHurt(bool state)
 	this->hurted = state;
 }
 
-void ARogadardCharacter::stopAttack()
-{
-	this->attacking = false;
-}
-
 bool ARogadardCharacter::getAttack()
 {
 	return this->attacking;
+}
+void ARogadardCharacter::setLife_Implementation(float amount)
+{
+	this->life = amount;
+}
+
+float ARogadardCharacter::getLife()
+{
+	return this->life;
 }
 
 bool ARogadardCharacter::getHurt()

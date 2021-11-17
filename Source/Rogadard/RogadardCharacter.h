@@ -19,6 +19,8 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 
 	/** Returns TopDownCameraComponent subobject **/
+	FORCEINLINE class UWidgetComponent* GetHealthBar() const { return UWidgetComponent; }
+	/** Returns TopDownCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetTopDownCameraComponent() const { return TopDownCameraComponent; }
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
@@ -34,16 +36,27 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void stopAttack();
 
+	UFUNCTION(BlueprintCallable, Reliable, Server)
+		void hurt(float dmg);
+	UFUNCTION(BlueprintCallable)
+		void stopHurt();
+
 	UFUNCTION(BlueprintCallable)
 		void setAttack(bool state);
 	UFUNCTION(BlueprintCallable)
 		void setHurt(bool state);
+	UFUNCTION(BlueprintCallable, Reliable, Server)
+		void setLife(float amount);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+		float getLife();
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 		bool getAttack();
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 		bool getHurt();
 
+	UPROPERTY(Replicated)
+		float life = 100.0;
 	UPROPERTY(Replicated)
 		bool attacking = false;
 	UPROPERTY(Replicated)
