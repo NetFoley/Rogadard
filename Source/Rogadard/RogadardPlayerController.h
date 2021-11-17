@@ -31,6 +31,7 @@ protected:
 
 	/** Handles stafing movement, left and right */
 	void MoveRight(float Val);
+	void doAttack();
 
 
 

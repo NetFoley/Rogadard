@@ -29,11 +29,10 @@ void ARogadardPlayerController::SetupInputComponent()
 	// set up gameplay key bindings
 	Super::SetupInputComponent();
 
-	InputComponent->BindAction("ResetVR", IE_Pressed, this, &ARogadardPlayerController::OnResetVR);
-
 	// Bind movement events
 	InputComponent->BindAxis("MoveForward", this, &ARogadardPlayerController::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &ARogadardPlayerController::MoveRight);
+	InputComponent->BindAction("Attack", IE_Pressed, this, &ARogadardPlayerController::doAttack);
 }
 
 void ARogadardPlayerController::OnResetVR()
@@ -41,10 +40,16 @@ void ARogadardPlayerController::OnResetVR()
 	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
 }
 
+void ARogadardPlayerController::doAttack()
+{
+	ARogadardCharacter* MyPawn = Cast<ARogadardCharacter>(GetPawn());
+	MyPawn->attack();
+}
+
 void ARogadardPlayerController::MoveForward(float Value)
 {
 	ARogadardCharacter* MyPawn = Cast<ARogadardCharacter>(GetPawn());
-	if (Value != 0.0f && MyPawn->isNotStunned())
+	if (Value != 0.0f)
 	{
 		// add movement in that direction
 		MyPawn->AddMovementInput(FVector(1.0f, 0.0f, 0.0f), Value, false);
@@ -53,7 +58,7 @@ void ARogadardPlayerController::MoveForward(float Value)
 void ARogadardPlayerController::MoveRight(float Value)
 {
 	ARogadardCharacter* MyPawn = Cast<ARogadardCharacter>(GetPawn());
-	if (Value != 0.0f && MyPawn->isNotStunned())
+	if (Value != 0.0f)
 	{
 		// add movement in that direction
 		MyPawn->AddMovementInput(FVector(0.0f, 1.0f, 0.0f), Value, false);
