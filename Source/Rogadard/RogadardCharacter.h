@@ -39,6 +39,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void stopHurt();
 
+	UFUNCTION(BlueprintImplementableEvent)
+		void UpdateLife();
+
 	UFUNCTION(BlueprintCallable)
 		void setAttack(bool state);
 	UFUNCTION(BlueprintCallable)
@@ -53,7 +56,7 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 		bool getHurt();
 
-	UPROPERTY(Replicated)
+	UPROPERTY(ReplicatedUsing=UpdateLife)
 		float life = 100.0;
 	UPROPERTY(Replicated)
 		bool attacking = false;
