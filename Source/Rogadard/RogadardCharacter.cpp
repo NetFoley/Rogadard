@@ -62,6 +62,7 @@ void ARogadardCharacter::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >&
 	DOREPLIFETIME(ARogadardCharacter, attacking);
 	DOREPLIFETIME(ARogadardCharacter, hurted);
 	DOREPLIFETIME(ARogadardCharacter, life);
+	DOREPLIFETIME(ARogadardCharacter, currentLife);
 }
 
 void ARogadardCharacter::Tick(float DeltaSeconds)
@@ -113,8 +114,8 @@ void ARogadardCharacter::stopAttack()
 
 void ARogadardCharacter::hurt_Implementation(float dmg)
 {
-	this->setLife(this->getLife() - dmg);
-	if (this->life > 0.0f)
+	this->setCurrentLife(this->getCurrentLife() - dmg);
+	if (this->currentLife > 0.0f)
 	{
 		this->stopAttack();
 		this->setHurt(true);
@@ -146,11 +147,21 @@ bool ARogadardCharacter::getAttack()
 void ARogadardCharacter::setLife_Implementation(float amount)
 {
 	this->life = amount;
+	this->setCurrentLife(amount);
+}
+
+void ARogadardCharacter::setCurrentLife_Implementation(float amount)
+{
+	this->currentLife = amount;
 }
 
 float ARogadardCharacter::getLife()
 {
 	return this->life;
+}
+float ARogadardCharacter::getCurrentLife()
+{
+	return this->currentLife;
 }
 
 bool ARogadardCharacter::getHurt()
