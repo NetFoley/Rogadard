@@ -48,9 +48,13 @@ public:
 		void setHurt(bool state);
 	UFUNCTION(BlueprintCallable, Reliable, Server)
 		void setLife(float amount);
+	UFUNCTION(BlueprintCallable, Reliable, Server)
+		void setCurrentLife(float amount);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 		float getLife();
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+		float getCurrentLife();
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 		bool getAttack();
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -58,6 +62,8 @@ public:
 
 	UPROPERTY(ReplicatedUsing=UpdateLife)
 		float life = 100.0;
+	UPROPERTY(ReplicatedUsing = UpdateLife)
+		float currentLife = 100.0;
 	UPROPERTY(Replicated)
 		bool attacking = false;
 	UPROPERTY(Replicated)
