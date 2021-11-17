@@ -61,6 +61,7 @@ void ARogadardCharacter::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >&
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(ARogadardCharacter, attacking);
 	DOREPLIFETIME(ARogadardCharacter, hurted);
+	DOREPLIFETIME(ARogadardCharacter, life);
 }
 
 void ARogadardCharacter::Tick(float DeltaSeconds)
@@ -118,8 +119,9 @@ void ARogadardCharacter::hurt_Implementation(float dmg)
 		this->stopAttack();
 		this->setHurt(true);
 		this->GetCharacterMovement()->DisableMovement();
+		UE_LOG(LogTemp, Warning, TEXT("DAMAGED"));
 	}
-}
+}	
 
 void ARogadardCharacter::stopHurt()
 {
