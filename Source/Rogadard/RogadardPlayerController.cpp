@@ -18,9 +18,10 @@ void ARogadardPlayerController::PlayerTick(float DeltaTime)
 {
 	Super::PlayerTick(DeltaTime);
 
-	if (ARogadardCharacter* MyPawn = Cast<ARogadardCharacter>(GetPawn()))
+	ARogadardCharacter* MyPawn = Cast<ARogadardCharacter>(GetPawn());
+	if (MyPawn)
 	{
-		this->ControlRotation =	((MyPawn->GetCursorToWorld()->GetTransformIncludingDecalSize().GetLocation()-MyPawn->GetTransform().GetLocation()).Rotation());
+		this->ControlRotation = ((MyPawn->GetCursorToWorld()->GetTransformIncludingDecalSize().GetLocation() - MyPawn->GetTransform().GetLocation()).Rotation());
 	}
 }
 
@@ -43,24 +44,26 @@ void ARogadardPlayerController::OnResetVR()
 void ARogadardPlayerController::doAttack()
 {
 	ARogadardCharacter* MyPawn = Cast<ARogadardCharacter>(GetPawn());
-	MyPawn->attack();
+	if (MyPawn){
+		MyPawn->attack();
+	}
 }
 
 void ARogadardPlayerController::MoveForward(float Value)
 {
 	ARogadardCharacter* MyPawn = Cast<ARogadardCharacter>(GetPawn());
-	if (Value != 0.0f)
-	{
-		// add movement in that direction
-		MyPawn->AddMovementInput(FVector(1.0f, 0.0f, 0.0f), Value, false);
+	if (MyPawn){
+		if (Value != 0.f) {
+			MyPawn->AddMovementInput(FVector(1.f, 0.f, 0.f), Value, false);
+		}
 	}
 }
 void ARogadardPlayerController::MoveRight(float Value)
 {
 	ARogadardCharacter* MyPawn = Cast<ARogadardCharacter>(GetPawn());
-	if (Value != 0.0f)
-	{
-		// add movement in that direction
-		MyPawn->AddMovementInput(FVector(0.0f, 1.0f, 0.0f), Value, false);
+	if (MyPawn) {
+		if (Value != 0.f){
+		MyPawn->AddMovementInput(FVector(0.f, 1.f, 0.f), Value, false);
+}
 	}
 }
